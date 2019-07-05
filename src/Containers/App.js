@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-//import Radium from 'radium';
-import Person from "./Person/Person";
+import Person from "../Components/Persons/Person/Person";
 
 class App extends Component {
   state = {
@@ -63,12 +62,12 @@ class App extends Component {
 
           <div> 
             {this.state.persons.map((person,index)=>{
-              return <Person 
-                        click={()=>this.deletePersonHandler(index)}
-                        name={person.name} 
-                        age={person.age}
-                        key={person.id}
-                        changed={(event)=>this.nameChangedHandler(event,person.id)}
+              return    <Person 
+                          click={()=>this.deletePersonHandler(index)}
+                          name={person.name} 
+                          age={person.age}
+                          key={person.id}
+                          changed={(event)=>this.nameChangedHandler(event,person.id)}
                         />
             })}
           </div> 
