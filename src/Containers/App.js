@@ -5,6 +5,11 @@ import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    console.log('[App.js] constructor');
+  }
+
   state = {
     persons: [
       { id:'ava',    name: "Max", age: 28 },
@@ -15,6 +20,21 @@ class App extends Component {
     showPersons: false
   };
 
+  static getDrivedStateFromProps(props, state){
+    console.log('[App.js] getDerviedStateFromProps',props);
+    return state;
+  }
+
+  componentDidUpdate(){
+    console.log('[App.js] componentDidMount');
+}
+
+  componentWillMount(){
+    console.log('[App.js] componentWillMount');
+  }
+  componentDidMount(){
+    console.log('[App.js] componentDidMount');
+  }
 
   nameChangedHandler = (event,id) => {
     const personIndex = this.state.persons.findIndex(p=>{
@@ -80,6 +100,7 @@ class App extends Component {
     return (
       <div className="App">
         <Cockpit 
+            title={this.props.appTitle}
             showPerson={this.state.showPersons} 
             persons={this.state.persons} 
             clicked={this.togglePersonsHandler}
