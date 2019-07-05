@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
-import Person from "../Components/Persons/Person/Person";
+// import Person from "../Components/Persons/Person/Person";
+import Persons from "../Components/Persons/Persons";
+import Cockpit from "../Components/Cockpit/Cockpit";
 
 class App extends Component {
   state = {
@@ -39,7 +41,7 @@ class App extends Component {
   }
 
 
-  togglePersonsHander=() => {
+  togglePersonsHandler=() => {
       const doesShow =this.state.showPersons;
       this.setState({showPersons: !doesShow});
 
@@ -58,47 +60,31 @@ class App extends Component {
     let persons =null;
     
     if (this.state.showPersons){
-        persons = (
-
+      persons=(
           <div> 
-            {this.state.persons.map((person,index)=>{
-              return    <Person 
-                          click={()=>this.deletePersonHandler(index)}
-                          name={person.name} 
-                          age={person.age}
-                          key={person.id}
-                          changed={(event)=>this.nameChangedHandler(event,person.id)}
-                        />
-            })}
+            <Persons  
+              persons={this.state.persons}
+              clicked={this.deletePersonHandler}
+              changed={this.nameChangedHandler}
+              />
           </div> 
-
-        );
-
+      );
         style.backgroundColor='red';
+      
     }
 
-    let classes=[];
-    if (this.state.persons.length<=2){
-      classes.push('red');
-    }
-
-    if (this.state.persons.length<=1)
-    {
-      classes.push('bold');
-    }
+   
 
 
 
     return (
       <div className="App">
-        <h1>Hi, I'm a React App</h1>
-        <p className={classes.join(' ')}>This is really working</p>
-        <button
-          style={style}
-          onClick={() => this.togglePersonsHander()}
+        <Cockpit 
+            showPerson={this.state.showPersons} 
+            persons={this.state.persons} 
+            clicked={this.togglePersonsHandler}
         >
-          Toggle Person
-        </button>
+        </Cockpit>
         {persons}
       </div>
     );
