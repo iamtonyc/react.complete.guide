@@ -3,6 +3,7 @@ import "./App.css";
 // import Person from "../Components/Persons/Person/Person";
 import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
+import WithClass from "../hoc/WithClass";
 
 class App extends Component {
   constructor(props){
@@ -17,7 +18,8 @@ class App extends Component {
       { id:'11412'  , name: "Stephen", age: 27 }
     ],
     otherState: "some other value",
-    showPersons: false
+    showPersons: false,
+    showCockpit: true
   };
 
   static getDrivedStateFromProps(props, state){
@@ -34,16 +36,12 @@ class App extends Component {
     return true;
   }
 
-  componentDidUpdate(){
-    console.log('[App.js] componentDidUpdate');
-  }
+  
 
   componentWillMount(){
     console.log('[App.js] componentWillMount');
   }
-  componentDidMount(){
-    console.log('[App.js] componentDidMount');
-  }
+  
 
   nameChangedHandler = (event,id) => {
     const personIndex = this.state.persons.findIndex(p=>{
@@ -107,16 +105,23 @@ class App extends Component {
 
 
     return (
-      <div className="App">
-        <Cockpit 
-            title={this.props.appTitle}
-            showPerson={this.state.showPersons} 
-            persons={this.state.persons} 
-            clicked={this.togglePersonsHandler}
-        >
-        </Cockpit>
+      <withClass classes="App">
+      <button
+            onClick={()=>{
+                this.setState({showCockpit:false});
+          }}
+      >
+        Remove Cockpit
+      </button>
+        {this.state.showCockpit? <Cockpit 
+                                  title={this.props.appTitle}
+                                  showPerson={this.state.showPersons} 
+                                  personsLength={this.state.persons.length} 
+                                  clicked={this.togglePersonsHandler}
+                                />
+        : null}
         {persons}
-      </div>
+      </withClass>
     );
   }
 }

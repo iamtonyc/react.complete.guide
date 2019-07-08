@@ -1,7 +1,28 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 
 
-const cockpit = (props)=>{
+const Cockpit = (props)=>{
+    useEffect(()=>{
+        console.log('[cockpit.js] useEffect');
+
+         const timer=setTimeout(()=>{
+            alert('Saved data to cloud');
+         },1000);
+         return ()=>{
+             clearTimeout(timer);
+             console.log('[cockpit.js] cleanup work in use Effect');
+         }
+    },[]);
+
+
+    useEffect(()=>{
+        console.log('[cockpit.js] 2nd useEffect');
+        return ()=>{
+            console.log('[cockpit.js] cleanup work in 2nd use Effect');
+        }
+    });
+    
+
     const style = {
         backgroundColor: "green",
         color: "white",
@@ -18,11 +39,11 @@ const cockpit = (props)=>{
     }
 
 
-    if (props.persons.length<=2){
+    if (props.personsLength<=2){
         classes.push('red');
     }
 
-    if (props.persons.length<=1){
+    if (props.personsLength<=1){
         classes.push('bold');
     }
 
@@ -42,4 +63,4 @@ const cockpit = (props)=>{
 };
 
 
-export default cockpit;
+export default React.memo(Cockpit);
