@@ -4,6 +4,7 @@ import "./App.css";
 import Persons from "../Components/Persons/Persons";
 import Cockpit from "../Components/Cockpit/Cockpit";
 import WithClass from "../hoc/WithClass";
+import Aux from "../hoc/Auxillary";
 
 class App extends Component {
   constructor(props){
@@ -13,13 +14,14 @@ class App extends Component {
 
   state = {
     persons: [
-      { id:'ava',    name: "Max", age: 28 },
+      { id:'ava',    name: "Max", age: "28" },
       { id:'adfasdf', name: "Manu", age: 29 },
       { id:'11412'  , name: "Stephen", age: 27 }
     ],
     otherState: "some other value",
     showPersons: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0
   };
 
   static getDrivedStateFromProps(props, state){
@@ -55,7 +57,12 @@ class App extends Component {
     const persons=[...this.state.persons];
     persons[personIndex]=person;
 
-    this.setState({persons:persons});
+    this.setState((prevState, props)=>{
+      return {
+        persons:persons,
+        changeCounter: prevState.changeCounter+1
+      };
+    });
 
    
   };
@@ -105,7 +112,7 @@ class App extends Component {
 
 
     return (
-      <withClass classes="App">
+      <Aux>
       <button
             onClick={()=>{
                 this.setState({showCockpit:false});
@@ -121,8 +128,9 @@ class App extends Component {
                                 />
         : null}
         {persons}
-      </withClass>
+      
+      </Aux>
     );
   }
 }
-export default App;
+export default WithClass(App, "App");
